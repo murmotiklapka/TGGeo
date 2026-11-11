@@ -37,7 +37,7 @@ def handle_remember_city(message):
 
 @bot.message_handler(commands=['show_my_cities'])
 def handle_show_visited_cities(message):
-    cities = manager.select_cities(message.chat.id)
+    cities = manager.select_cities(user_id)
     user_id = message.chat.id
     manager.create_grapf(f"{user_id}.png", cities)
     with open(f"{user_id}.png", 'rb') as image:
@@ -46,7 +46,10 @@ def handle_show_visited_cities(message):
 @bot.message_handler(commands=['draw_distance'])
 def draw_distance(message):
     user_id = message.chat.id
-    cities = manager.select_cities(user_id)
+    cities = message.text.split()[1:]
+    if len(cities) < 2:
+        bot.send_message(message.chat.id, "Пожалуйста, укажите два города для расчета расстояния.")
+        return
     city1, city2 = cities[:2]
     manager.draw_distance(f"{user_id}.png", city1, city2)
     with open(f"{user_id}.png", 'rb') as image:
