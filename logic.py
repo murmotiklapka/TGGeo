@@ -65,29 +65,31 @@ class DB_Map():
                 lat, lng = cord
                 plt.figure(figsize=(10, 5))
                 ax = plt.axes(projection=ccrs.PlateCarree())
-                ax.stock_img()
+                img = plt.imread("Blue_Marble_2002.png")
+                ax.imshow(img, extent=[-180, 180, -90, 90], transform=ccrs.PlateCarree())
                 ax.plot(lng + 0.5 , lat + 3 , marker='x', color='blue', markersize=10)
                 plt.savefig(path)
 
         
     def draw_distance(self, path, city1, city2):
         ax = plt.axes(projection=ccrs.PlateCarree())
-        ax.stock_img()
+        img = plt.imread("Blue_Marble_2002.png")
+        ax.imshow(img, extent=[-180, 180, -90, 90], transform=ccrs.PlateCarree())
         ny_lat, ny_lon = self.get_coordinates(city1)
         delhi_lat, delhi_lon = self.get_coordinates(city2)
         plt.plot([ny_lon, delhi_lon], [ny_lat, delhi_lat],
-                color='blue', linestyle='-', linewidth=1, marker='x',
+                color='purple', linestyle='-', linewidth=1, marker='x',
                 transform=ccrs.PlateCarree(),
                 )
         plt.plot([ny_lon, delhi_lon], [ny_lat, delhi_lat],
-                color='blue', linestyle='--', linewidth=1, marker='x',
+                color='cyan', linestyle='--', linewidth=2, marker='x',
                 transform=ccrs.PlateCarree(),
                 )
-        plt.text(ny_lon - 3, ny_lat - 12, city1,
+        plt.text(ny_lon - 3, ny_lat - 12, city1, color = 'cyan',
                 horizontalalignment='right',
                 transform=ccrs.PlateCarree()
                 )
-        plt.text(delhi_lon + 3, delhi_lat - 12, city2,
+        plt.text(delhi_lon + 3, delhi_lat - 12, city2, color = 'red',
                 horizontalalignment='left',
                 transform=ccrs.PlateCarree()
                 )
